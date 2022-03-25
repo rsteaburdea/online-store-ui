@@ -1,0 +1,12 @@
+@use "@angular/material" as mat;
+@import './app-color-palette.scss';
+
+$dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $primary,
+      accent: $accent,
+      warn: $warn,
+    ),
+  )
+);
