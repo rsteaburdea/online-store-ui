@@ -1,1 +1,7 @@
-<router-outlet></router-outlet>
+<div 
+    class="mat-typography app-frame mat-app-background" 
+    [ngClass]="{ 'dark-theme' : isDarkTheme }">
+<!-- <div class="dark-theme"> -->
+    <router-outlet></router-outlet>
+    <app-navbar (darkModeEmitter)="switchMode($event)"></app-navbar>
+</div>
