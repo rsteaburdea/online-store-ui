@@ -11,7 +11,7 @@ import { map, Observable, startWith } from 'rxjs';
 export class NavbarComponent implements OnInit{
   public isDarkThemeActive: boolean = false;
   @Output()
-  readonly darkModeEmitter = new EventEmitter<boolean>();
+  readonly darkThemeEmitter = new EventEmitter<boolean>();
 
   public searchBarForm = new FormGroup({
     searchBar: new FormControl(),
@@ -25,7 +25,7 @@ export class NavbarComponent implements OnInit{
 
   toggleDarkTheme(): void {
     this.isDarkThemeActive = !this.isDarkThemeActive;
-    this.darkModeEmitter.emit(this.isDarkThemeActive);
+    this.darkThemeEmitter.emit(this.isDarkThemeActive);
   }
 
   onSubmit() {}
