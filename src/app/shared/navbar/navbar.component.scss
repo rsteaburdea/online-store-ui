@@ -1,59 +1,71 @@
 mat-toolbar {
-    mat-nav-list {
-        width: 100%;
-        height: 100%;
-        padding-top: 0;
-        display: flex;
+  mat-nav-list {
+    width: 100%;
+    height: 100%;
+    padding-top: 0;
+    display: flex;
 
-        .nav-left, .nav-right, .nav-center {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .nav-center {
-            margin-left: auto;
-            margin-right: auto;
-
-            form {
-                display: flex;
-                justify-content: center;
-        
-                input {
-                    border-radius: 10px;
-                    border: none;
-                    text-align: center;
-                    // TODO: Switch to % maybe or em/rem
-                    width: 300px;
-                    height: 30px;
-        
-                    &:focus {
-                        outline: none;
-                    }
-                }
-            }
-        }
-
-        .nav-left, .nav-right {
-            // FIXME: Padding and overlay
-            .translate {
-                border-right: 1px solid white;
-                padding-right: 32px;
-            }
-        }
+    .nav-left,
+    .nav-right,
+    .nav-center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
+
+    .nav-center {
+      margin-left: auto;
+      margin-right: auto;
+
+      form {
+        display: flex;
+        justify-content: center;
+
+        input {
+          border-radius: 10px;
+          border: none;
+          text-align: center;
+          // TODO: Switch to % maybe or em/rem
+          width: 300px;
+          height: 30px;
+
+          &:focus {
+            outline: none;
+          }
+        }
+      }
+    }
+
+    .nav-left,
+    .nav-right {
+      // FIXME: Padding and overlay
+      .translate {
+        border-right: 1px solid white;
+        padding-right: 32px;
+      }
+    }
+  }
 }
 
 :host {
-    height: 100vh;
-    display: block;
-  }
-  .content {
-    padding: 2rem;
-    box-sizing: border-box;
-  }
-  
-  .card-content {
-    padding: 1rem;
-  }
-  
+  height: 100vh;
+  display: block;
+}
+
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 200px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}

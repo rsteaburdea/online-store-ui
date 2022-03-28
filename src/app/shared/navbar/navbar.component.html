@@ -1,80 +1,59 @@
-<div>
-
-  <mat-toolbar color="primary">
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav class="sidenav" fixedInViewport attr.role='dialog' color="primary" #sidenav mode="over" opened="false">
     <mat-nav-list>
+    </mat-nav-list>
+  </mat-sidenav>
 
-      <div class="nav-left">
-        <div class="burger-button">
-          <button mat-icon-button (click)="sidenav.toggle()">
-            <mat-icon>menu</mat-icon>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <mat-nav-list>
+    
+        <div class="nav-left">
+          <div class="burger-button">
+            <button mat-icon-button (click)="sidenav.toggle()">
+              <mat-icon>menu</mat-icon>
+            </button>
+          </div>
+          <a class="company-name" routerLink="/"><span>Online Store</span></a>
+        </div>
+    
+        <div class="nav-center">
+          <form [formGroup]="searchBarForm" (ngSubmit)="onSubmit()">
+            <div>
+              <input type="text" placeholder="{{ 'toolbar.search-message' | translate }}" formControlName="searchBar"
+                [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
+            </div>
+    
+            <button mat-icon-button (click)="onSubmit()">
+              <mat-icon>search</mat-icon>
+            </button>
+          </form>
+        </div>
+    
+        <div class="nav-right">
+          <button mat-icon-button (click)="toggleDarkTheme()">
+            <span style="display: flex; justify-content: center;">
+              <mat-icon *ngIf="!isDarkThemeActive">light_mode</mat-icon>
+              <mat-icon *ngIf="isDarkThemeActive">dark_mode</mat-icon>
+            </span>
+          </button>
+          <button mat-icon-button>
+            <mat-icon class="translate">translate</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon>person</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon matBadge="0" matBadgeColor="accent">shopping_cart</mat-icon>
           </button>
         </div>
-        <a class="company-name" routerLink="/"><span>Online Store</span></a>
-      </div>
-
-      <div class="nav-center">
-        <form [formGroup]="searchBarForm" (ngSubmit)="onSubmit()">
-          <div>
-            <input type="text" placeholder="{{ 'toolbar.search-message' | translate }}" 
-              formControlName="searchBar" [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete">
-              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                {{option}}
-              </mat-option>
-            </mat-autocomplete>
-          </div>
-  
-          <button mat-icon-button (click)="onSubmit()">
-            <mat-icon>search</mat-icon>
-          </button>
-        </form>
-      </div>
-
-      <div class="nav-right">
-        <button mat-icon-button (click)="toggleDarkTheme()">
-          <span style="display: flex; justify-content: center;">
-            <mat-icon *ngIf="!isDarkThemeActive">light_mode</mat-icon>
-            <mat-icon *ngIf="isDarkThemeActive">dark_mode</mat-icon>
-          </span>
-        </button>
-        <button mat-icon-button>
-          <mat-icon class="translate">translate</mat-icon>
-        </button>
-        <button mat-icon-button>
-          <mat-icon>person</mat-icon>
-        </button>
-        <button mat-icon-button>
-          <mat-icon matBadge="0" matBadgeColor="accent">shopping_cart</mat-icon>
-        </button>
-      </div>
-
-    </mat-nav-list>
-  </mat-toolbar>
-
-  <mat-sidenav-container class="example-container">
-
-    <mat-sidenav color="primary" #sidenav mode="over" opened="false">
-      <mat-nav-list>
+    
       </mat-nav-list>
-    </mat-sidenav>
-
-  </mat-sidenav-container>
-
-  <main class="content">
-    <h1>Component heading</h1>
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>User Card</mat-card-title>
-      </mat-card-header>
-      <mat-card-content class="card-content">
-        <mat-form-field>
-          <mat-label>Select access</mat-label>
-          <mat-select>
-            <mat-option [value]="0">Admin</mat-option>
-            <mat-option [value]="1">Collaborator</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </mat-card-content>
-    </mat-card>
-  </main>
-</div>
+    </mat-toolbar>
+  </mat-sidenav-content>
+</mat-sidenav-container>
