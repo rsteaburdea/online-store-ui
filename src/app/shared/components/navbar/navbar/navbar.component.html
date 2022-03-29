@@ -1,0 +1,61 @@
+<div>
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav class="sidenav" fixedInViewport attr.role='dialog' color="primary" #sidenav mode="over" opened="false">
+      <mat-nav-list>
+      </mat-nav-list>
+    </mat-sidenav>
+  
+    <mat-sidenav-content>
+      <mat-toolbar color="primary">
+        <mat-nav-list>
+      
+          <div class="nav-left">
+            <div class="burger-button">
+              <button mat-icon-button (click)="sidenav.toggle()">
+                <mat-icon>menu</mat-icon>
+              </button>
+            </div>
+            <a class="company-name" routerLink="/"><span>Online Store</span></a>
+          </div>
+      
+          <div class="nav-center">
+            <form [formGroup]="searchBarForm" (ngSubmit)="onSubmit()">
+              <div>
+                <input type="text" placeholder="{{ 'toolbar.search-message' | translate }}" formControlName="searchBar"
+                  [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+              </div>
+      
+              <button mat-icon-button (click)="onSubmit()">
+                <mat-icon>search</mat-icon>
+              </button>
+            </form>
+          </div>
+      
+          <div class="nav-right">
+            <button mat-icon-button (click)="toggleDarkTheme()">
+              <span style="display: flex; justify-content: center;">
+                <mat-icon *ngIf="!isDarkMode">light_mode</mat-icon>
+                <mat-icon *ngIf="isDarkMode">dark_mode</mat-icon>
+              </span>
+            </button>
+            <button mat-icon-button>
+              <mat-icon class="translate">translate</mat-icon>
+            </button>
+            <button mat-icon-button routerLink="/sign-in">
+              <mat-icon>person</mat-icon>
+            </button>
+            <button mat-icon-button>
+              <mat-icon matBadge="0" matBadgeColor="accent">shopping_cart</mat-icon>
+            </button>
+          </div>
+      
+        </mat-nav-list>
+      </mat-toolbar>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
