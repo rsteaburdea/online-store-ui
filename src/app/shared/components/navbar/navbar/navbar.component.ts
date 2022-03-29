@@ -1,6 +1,10 @@
-import { Component, ChangeDetectionStrategy, EventEmitter, Output, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, EventEmitter, Output, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { map, Observable, startWith } from 'rxjs';
+import { autoLogout } from 'src/app/auth/state/auth.actions';
+import { isAuthenticated } from 'src/app/auth/state/auth.selector';
+import { AppState } from 'src/app/store/app.state';
 
 @Component({
   selector: 'app-navbar',
@@ -9,9 +13,11 @@ import { map, Observable, startWith } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavbarComponent implements OnInit{
-  public isDarkThemeActive: boolean = false;
+  @Input()
+  isDarkMode = false;
   @Output()
   readonly darkThemeEmitter = new EventEmitter<boolean>();
+  private isAuthenticated!: Observable<boolean>;
 
   public searchBarForm = new FormGroup({
     searchBar: new FormControl(),
@@ -21,17 +27,17 @@ export class NavbarComponent implements OnInit{
   options: string[] = ['One', 'Two', 'Three'];
   filteredOptions: Observable<string[]> = new Observable();
 
-  constructor() {}
+  constructor(private store: Store<AppState>) {}
 
   toggleDarkTheme(): void {
-    this.isDarkThemeActive = !this.isDarkThemeActive;
-    this.darkThemeEmitter.emit(this.isDarkThemeActive);
+    this.darkThemeEmitter.emit(!this.isDarkMode);
   }
 
   onSubmit() {}
 
 
   ngOnInit() {
+    this.isAuthenticated = this.store.select(isAuthenticated);
     if (this.searchBarForm !== null && this.searchBarForm.get('searchBar') !== null) {
       //@ts-ignore
       this.filteredOptions = this.searchBarForm.get('searchBar')
@@ -46,5 +52,10 @@ export class NavbarComponent implements OnInit{
     const filterValue = value.toLowerCase();
 
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  onLogout(event: Event) {
+    event.preventDefault();
+    this.store.dispatch(autoLogout());
   }
 }
