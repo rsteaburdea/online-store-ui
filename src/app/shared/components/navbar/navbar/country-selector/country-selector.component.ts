@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
+import { IpInfoResponse } from 'src/app/models/ip.info.response.data';
 import { AppState } from 'src/app/store/app.state';
-import { getAvailableLanguages, getCurrentLanguage, getDefaultLanguage } from 'src/app/store/shared/shared.selector';
+import { getIpInfo } from 'src/app/store/shared/shared.selector';
 
 @Component({
   selector: 'app-country-selector',
@@ -12,7 +13,7 @@ import { getAvailableLanguages, getCurrentLanguage, getDefaultLanguage } from 's
 })
 export class CountrySelectorComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject();
-  public readonly availableLanguages$: Observable<(string)[]> = this.store.select(getAvailableLanguages);
+
 
   constructor(private store: Store<AppState>,
               private translateService: TranslateService) { }
@@ -22,21 +23,17 @@ export class CountrySelectorComponent implements OnInit, OnDestroy {
   }
 
   private loadLanguage(): void {
-    this.store.select(getCurrentLanguage)
+    this.store.select(getIpInfo)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((language: string) => {
-        if (language) {
+      .subscribe((ipInfo: IpInfoResponse | null) => {
+        if (ipInfo && ipInfo.location) {
+          const language = ipInfo.location?.language.code.toLowerCase();
           this.translateService.setDefaultLang(language);
           this.translateService.use(language);
         }
       });
   }
 
-  public changeLanguage(language: string) {
-    this.translateService.setDefaultLang(language);
-    this.translateService.use(language);
-  }
-  
   ngOnDestroy(): void {
       this.destroy$.next({});
       this.destroy$.complete();
