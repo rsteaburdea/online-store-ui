@@ -1,0 +1,36 @@
+div {
+    height: 100vh;
+    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    mat-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 15%;
+        width: 350px;
+        height: 350px;
+        padding: 16px 24px;
+
+        mat-card-title {
+            margin-top: 10px;
+        }
+
+        mat-card-content {
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+
+        mat-card-footer {
+            margin-bottom: 10px;
+        }
+    }
+
+    button: {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

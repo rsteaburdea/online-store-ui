@@ -1,3 +1,6 @@
 {
-    "toolbar.search-message" : "Cauta un produs"
+    "toolbar.search-message" : "Cauta un produs",
+    "sign.in.header" : "Salutari",
+    "sign.in.email" : "Introdu adresa de email",
+    "sign.in.continue" : "Continua"
 }

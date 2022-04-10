@@ -1,1 +1,22 @@
-<p>sign-in works!</p>
+<div>
+    <mat-card>
+        <mat-card-title>{{ 'sign.in.header' | translate }} 😃</mat-card-title>
+        <mat-card-content>
+            <mat-form-field style="width: 300px;" appearance="outline" color="primary">
+                <mat-label>{{ 'sign.in.email' | translate }}</mat-label>
+                <input matInput placeholder="Placeholder">
+            </mat-form-field>
+            <button style="width: 300px" mat-raised-button color="primary">{{ 'sign.in.continue' | translate }}</button>
+        </mat-card-content>
+        <mat-card-footer>
+            <button style="width: 150px; margin: 5px;" mat-raised-button color="primary">
+                <fa-icon [icon]="faFacebook"></fa-icon>
+                Facebook
+            </button>
+            <button style="width: 150px; margin: 5px" mat-raised-button color="warn">
+                <fa-icon [icon]="faGoogle"></fa-icon>
+                Google
+            </button>
+        </mat-card-footer>
+    </mat-card>
+</div>

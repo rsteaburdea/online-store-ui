@@ -1,3 +1,6 @@
 {
-    "toolbar.search-message" : "Search for a product"
+    "toolbar.search-message" : "Search for a product",
+    "sign.in.header" : "Hello",
+    "sign.in.email" : "Type your email address",
+    "sign.in.continue" : "Continue"
 }
