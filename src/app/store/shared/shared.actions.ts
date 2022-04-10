@@ -9,7 +9,8 @@ export const SWITCH_DARK_THEME = '[shared state] switch dark theme';
 
 export const LOAD_LANGUAGE_CONFIG = '[shared state] load language config';
 export const LOAD_IP_CONFIG = '[shared state] load ip config'
-export const LOAD_IP_SUCCESS = '[shared state] load ip details success'
+export const LOAD_IP_SUCCESS = '[shared state] load ip details success';
+export const UPDATE_CURRENT_LANGUAGE = '[shared state] update current language';
 
 export const setLoadingSpinner = createAction(
   SET_LOADING_ACTION,
@@ -36,4 +37,9 @@ export const loadIpConfig = createAction(
 export const loadIpSuccess = createAction(
     LOAD_IP_SUCCESS,
     props<{ ipInfoResponse: IpInfoResponse | null }>()
+);
+
+export const updateCurrentLanguage = createAction(
+  UPDATE_CURRENT_LANGUAGE,
+  props<{ language: string }>()
 );

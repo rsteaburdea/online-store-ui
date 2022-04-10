@@ -38,7 +38,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.configService.getConfig()
       .pipe(takeUntil(this.destroy$))
       .subscribe((config: Config) => {
-        const languageConfig: LanguageConfig  = config.languageConfig;
+        const languageConfig: LanguageConfig = config.languageConfig;
         this.store.dispatch(loadLanguageConfig({ languageConfig }))
         const ipConfig: IpConfig = config.ipConfig;
         this.store.dispatch(loadIpConfig({ ipConfig }));

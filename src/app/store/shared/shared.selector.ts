@@ -21,12 +21,7 @@ export const getIpInfo = createSelector(getSharedState, (state) => {
 })
 
 export const getCurrentLanguage = createSelector(getSharedState, (state) => {
-  if (state.ipInfo && 
-      state.languageConfig.availableLanguages
-        .indexOf(state.ipInfo.location.language.code.toLowerCase()) !== -1) {
-    return state.ipInfo.location.language.code.toLowerCase();
-  }
-  return state.languageConfig.defaultLanguage;
+    return state.currentLanguage;
 })
 
 export const getDefaultLanguage = createSelector(getSharedState, (state) => {

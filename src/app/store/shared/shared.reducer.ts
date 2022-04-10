@@ -1,4 +1,4 @@
-import { setLoadingSpinner, setErrorMessage, switchDarkTheme, loadIpSuccess, loadLanguageConfig } from './shared.actions';
+import { setLoadingSpinner, setErrorMessage, switchDarkTheme, loadIpSuccess, loadLanguageConfig, updateCurrentLanguage } from './shared.actions';
 import { Action, createReducer, on } from '@ngrx/store';
 import { initialState, SharedState } from './shared.state';
 
@@ -33,6 +33,12 @@ const _sharedReducer = createReducer(
       ...state,
       ipInfo: action.ipInfoResponse
     };
+  }),
+  on(updateCurrentLanguage, (state, action) => {
+    return {
+      ...state,
+      currentLanguage: action.language
+    }
   })
 );
 

@@ -1,25 +1,28 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
-import { of } from "rxjs";
+import { TranslateService } from "@ngx-translate/core";
+import { of, switchMap } from "rxjs";
 import { catchError, exhaustMap, map } from "rxjs/operators";
 import { IpConfig } from "src/app/models/config.model";
 import { IpService } from "src/app/services/ip.service";
 import { AppState } from "../app.state";
-import { loadIpConfig, loadIpSuccess, setErrorMessage, setLoadingSpinner } from "./shared.actions";
+import { loadIpConfig, loadIpSuccess, setErrorMessage, setLoadingSpinner, updateCurrentLanguage } from "./shared.actions";
+import { getAvailableLanguages, getDefaultLanguage } from "./shared.selector";
 
 @Injectable()
 export class SharedEffects {
     constructor(
         private actions$: Actions,
         private ipService: IpService,
-        private store: Store<AppState>
+        private store: Store<AppState>,
+        private translateService: TranslateService
     ) {}
 
-    loadIpInfo$ = createEffect(() => {
+    loadIp$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadIpConfig),
-            exhaustMap((action: {ipConfig: IpConfig}) => {
+            exhaustMap((action: { ipConfig: IpConfig }) => {
                 return this.ipService.getIpDetails(action.ipConfig).pipe(
                     map((ipCompleteInfo) => {
                         this.store.dispatch(setLoadingSpinner({ status: false }));
@@ -35,4 +38,45 @@ export class SharedEffects {
             })
         )
     })
+
+    loadIpSuccess$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(loadIpSuccess),
+            map((action) => {
+                let language: string = 'en';
+                if (action !== null && action.ipInfoResponse !== null) 
+                    language = action.ipInfoResponse.location.language.code;
+                return updateCurrentLanguage({ language });
+            })
+        )
+    })
+
+    updateCurrentLanguage$ = createEffect(
+        () => {
+            return this.actions$.pipe(
+                ofType(updateCurrentLanguage),
+                switchMap((action) => 
+                    this.store.select(getAvailableLanguages)
+                        .pipe(
+                            map(array => {
+                                let language = array.filter(value => value === action.language)
+                                return (language.length > 0) ? language[0] : null;
+                            })
+                        )
+                ),
+                switchMap((language) => 
+                    this.store.select(getDefaultLanguage)
+                        .pipe(
+                            map(defaultLanguage => {
+                                return (language !== null) ? language : defaultLanguage;
+                            })
+                        )
+                ),
+                switchMap((language) => {
+                    this.translateService.setDefaultLang(language);
+                    return this.translateService.use(language);
+                })
+            )
+        }
+    )
 }
