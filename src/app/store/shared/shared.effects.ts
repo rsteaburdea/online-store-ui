@@ -43,11 +43,17 @@ export class SharedEffects {
         return this.actions$.pipe(
             ofType(loadIpSuccess),
             map((action) => {
-                let language: string = 'en';
-                if (action !== null && action.ipInfoResponse !== null)
-                    language = action.ipInfoResponse.location.language.code;
-                return updateCurrentLanguage({ language });
-            })
+                return action.ipInfoResponse?.location.language.code;
+            }),
+            switchMap((language) => 
+                this.store.select(getDefaultLanguage)
+                    .pipe(
+                        map((defaultLanguage) => {
+                            language ??= defaultLanguage;
+                            return updateCurrentLanguage({ language });
+                        })
+                    )
+            )
         )
     })
 
@@ -68,7 +74,7 @@ export class SharedEffects {
                     this.store.select(getDefaultLanguage)
                         .pipe(
                             map(defaultLanguage => {
-                                language = (language !== null) ? language : defaultLanguage
+                                language ??= defaultLanguage
                                 this.translateService.setDefaultLang(language);
                                 this.translateService.use(language);
                                 return language;
