@@ -19,3 +19,20 @@ export const isDarkThemeEnabled = createSelector(getSharedState, (state) => {
 export const getIpInfo = createSelector(getSharedState, (state) => {
   return state.ipInfo;
 })
+
+export const getCurrentLanguage = createSelector(getSharedState, (state) => {
+  if (state.ipInfo && 
+      state.languageConfig.availableLanguages
+        .indexOf(state.ipInfo.location.language.code.toLowerCase()) !== -1) {
+    return state.ipInfo.location.language.code.toLowerCase();
+  }
+  return state.languageConfig.defaultLanguage;
+})
+
+export const getDefaultLanguage = createSelector(getSharedState, (state) => {
+  return state.languageConfig.defaultLanguage;
+})
+
+export const getAvailableLanguages = createSelector(getSharedState, (state) => {
+  return state.languageConfig.availableLanguages;
+})

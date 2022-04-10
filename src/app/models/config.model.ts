@@ -1,5 +1,14 @@
-import { IpInfoConfig } from "./ip.info.config.model";
-
 export interface Config {
-    ipConfig: IpInfoConfig
+    languageConfig: LanguageConfig;
+    ipConfig: IpConfig
+}
+
+export interface LanguageConfig {
+    defaultLanguage: string;
+    availableLanguages: (string)[];
+}
+
+export interface IpConfig {
+    url: string;
+    token: string;
 }

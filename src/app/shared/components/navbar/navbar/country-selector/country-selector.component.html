@@ -1,12 +1,8 @@
 <button mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon class="translate">translate</mat-icon>
 </button>
-<!-- TODO: Add ngFor + default languages in config file -->
 <mat-menu #menu="matMenu">
-    <button mat-menu-item>
-      <span>EN</span>
-    </button>
-    <button mat-menu-item>
-      <span>RO</span>
+    <button mat-menu-item *ngFor="let language of (availableLanguages$ | async)" (click)="changeLanguage(language)">
+      <span>{{ language | uppercase }}</span>
     </button>
 </mat-menu>

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -19,6 +18,8 @@ import { CustomSerializer } from './store/router/custom-serializer';
 import { AuthTokenInterceptor } from './services/auth.token.interceptor';
 import { environment } from 'src/environments/environment';
 import { appReducer } from './store/app.state';
+import { SharedEffects } from './store/shared/shared.effects';
+import { initialState } from './store/shared/shared.state';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -39,14 +40,14 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReactiveFormsModule,
     MaterialModule,
     TranslateModule.forRoot({
-      defaultLanguage: 'en',
+      defaultLanguage: initialState.languageConfig.defaultLanguage,
       loader: {
         provide: TranslateLoader,
           useFactory: HttpLoaderFactory,
           deps: [HttpClient]
       }
     }),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, SharedEffects]),
     StoreModule.forRoot(appReducer),
     StoreDevtoolsModule.instrument({
       logOnly: environment.production,

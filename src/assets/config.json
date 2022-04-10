@@ -1,5 +1,8 @@
 {
-  "languages": ["en", "ro"],
+  "languageConfig": {
+    "defaultLanguage": "ro",
+    "availableLanguages": ["en", "ro"]
+  },
   "ipConfig": {
     "url": "https://api.ipregistry.co/",
     "token": "g9j0gxqyf9g9ie1t"

@@ -1,10 +1,10 @@
 export interface IpInfoResponse {
-  currency?: {
+  currency: {
     code: string,
     name: string,
     plural: string
   },
-  location?: {
+  location: {
     continent: {
       code: string,
       name: string
@@ -24,7 +24,7 @@ export interface IpInfoResponse {
       native: string
     }
   },
-  time_zone?: {
+  time_zone: {
     abreviation: string,
     current_time: string
   }

@@ -8,9 +8,8 @@ import { NavbarRoutingModule } from './navbar-routing.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpLoaderFactory } from 'src/app/app.module';
 import { HttpClient } from '@angular/common/http';
-import { initialState } from 'src/app/store/shared/shared.state';
 import { CountrySelectorComponent } from './navbar/country-selector/country-selector.component';
-import { SharedEffects } from 'src/app/store/shared/shared.effects';
+import { initialState } from 'src/app/store/shared/shared.state';
 
 
 @NgModule({
@@ -20,9 +19,9 @@ import { SharedEffects } from 'src/app/store/shared/shared.effects';
     CommonModule,
     NavbarRoutingModule,
     ReactiveFormsModule,
-    EffectsModule.forFeature([SharedEffects]),
+    EffectsModule.forFeature(),
     TranslateModule.forChild({
-      defaultLanguage: 'en',
+      defaultLanguage: initialState.languageConfig.defaultLanguage,
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,

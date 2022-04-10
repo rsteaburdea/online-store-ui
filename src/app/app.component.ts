@@ -5,11 +5,8 @@ import { AppState } from './store/app.state';
 import { Store } from '@ngrx/store';
 import { getLoading, isDarkThemeEnabled } from './store/shared/shared.selector';
 import { ConfigService } from './services/config.service';
-import { IpService } from './services/ip.service';
-import { Config } from './models/config.model'
-import { loadIpInfo } from './store/shared/shared.actions';
-import { IpInfoConfig } from './models/ip.info.config.model';
-import { IpInfoResponse } from './models/ip.info.response.data';
+import { Config, IpConfig, LanguageConfig } from './models/config.model'
+import { loadIpConfig, loadLanguageConfig } from './store/shared/shared.actions';
 
 @Component({
   selector: 'app-root',
@@ -28,22 +25,23 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>,
     private configService: ConfigService,
-    private ipService: IpService,
     @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2
   ) {}
 
   ngOnInit(): void {
-    this.loadIpInfo();
+    this.loadConfig();
     this.themeSwitcher();
   }
 
-  private loadIpInfo(): void {
+  private loadConfig(): void {
     this.configService.getConfig()
       .pipe(takeUntil(this.destroy$))
       .subscribe((config: Config) => {
-        const ipInfoConfig: IpInfoConfig = config.ipConfig;
-        this.store.dispatch(loadIpInfo({ ipInfoConfig }));
+        const languageConfig: LanguageConfig  = config.languageConfig;
+        this.store.dispatch(loadLanguageConfig({ languageConfig }))
+        const ipConfig: IpConfig = config.ipConfig;
+        this.store.dispatch(loadIpConfig({ ipConfig }));
       })
   }
 

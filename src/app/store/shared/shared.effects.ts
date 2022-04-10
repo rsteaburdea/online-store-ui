@@ -2,11 +2,11 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { of } from "rxjs";
-import { catchError, exhaustMap, map, withLatestFrom, concatMap, tap, switchMap, mergeMap} from "rxjs/operators";
-import { IpInfoConfig } from "src/app/models/ip.info.config.model";
+import { catchError, exhaustMap, map } from "rxjs/operators";
+import { IpConfig } from "src/app/models/config.model";
 import { IpService } from "src/app/services/ip.service";
 import { AppState } from "../app.state";
-import { loadIpInfo, loadIpInfoSuccess, setErrorMessage, setLoadingSpinner } from "./shared.actions";
+import { loadIpConfig, loadIpSuccess, setErrorMessage, setLoadingSpinner } from "./shared.actions";
 
 @Injectable()
 export class SharedEffects {
@@ -18,14 +18,14 @@ export class SharedEffects {
 
     loadIpInfo$ = createEffect(() => {
         return this.actions$.pipe(
-            ofType(loadIpInfo),
-            mergeMap((action: {ipInfoConfig: IpInfoConfig}) => {
-                return this.ipService.getIpDetails(action.ipInfoConfig).pipe(
-                    map((ipInfoResponse) => {
+            ofType(loadIpConfig),
+            exhaustMap((action: {ipConfig: IpConfig}) => {
+                return this.ipService.getIpDetails(action.ipConfig).pipe(
+                    map((ipCompleteInfo) => {
                         this.store.dispatch(setLoadingSpinner({ status: false }));
                         this.store.dispatch(setErrorMessage({ message: '' }));
-                        // const ipInfo = this.ipService.formatUser(data);
-                        return loadIpInfoSuccess({ ipInfoResponse });
+                        const ipInfoResponse = this.ipService.formatIpInfoResponse(ipCompleteInfo);
+                        return loadIpSuccess({ ipInfoResponse });
                     }),
                     catchError(() => {
                         this.store.dispatch(setLoadingSpinner({ status: false }));
