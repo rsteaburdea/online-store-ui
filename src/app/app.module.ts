@@ -8,9 +8,8 @@ import { MaterialModule } from 'src/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatNativeDateModule } from '@angular/material/core';
-import { NavbarComponent } from './shared/components/navbar/navbar/navbar.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './auth/state/auth.effects';
 import { StoreModule } from '@ngrx/store';
@@ -19,10 +18,7 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { CustomSerializer } from './store/router/custom-serializer';
 import { AuthTokenInterceptor } from './services/auth.token.interceptor';
 import { environment } from 'src/environments/environment';
-import { appReducer, AppState } from './store/app.state';
-import { SignInComponent } from './auth/sign-in/sign-in.component';
-import { navbarReducer } from './shared/components/navbar/state/navbar.reducer';
-import { initialState } from './shared/components/navbar/state/navbar.state';
+import { appReducer } from './store/app.state';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -43,7 +39,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReactiveFormsModule,
     MaterialModule,
     TranslateModule.forRoot({
-      defaultLanguage: initialState.language,
+      defaultLanguage: 'en',
       loader: {
         provide: TranslateLoader,
           useFactory: HttpLoaderFactory,

@@ -11,3 +11,11 @@ export const getLoading = createSelector(getSharedState, (state) => {
 export const getErrorMessage = createSelector(getSharedState, (state) => {
   return state.errorMessage;
 });
+
+export const isDarkThemeEnabled = createSelector(getSharedState, (state) => {
+  return state.isDarkThemeEnabled;
+})
+
+export const getIpInfo = createSelector(getSharedState, (state) => {
+  return state.ipInfo;
+})

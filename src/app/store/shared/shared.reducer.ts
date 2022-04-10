@@ -1,4 +1,4 @@
-import { setLoadingSpinner, setErrorMessage } from './shared.actions';
+import { setLoadingSpinner, setErrorMessage, switchDarkTheme, loadIpInfoSuccess } from './shared.actions';
 import { Action, createReducer, on } from '@ngrx/store';
 import { initialState, SharedState } from './shared.state';
 
@@ -14,6 +14,18 @@ const _sharedReducer = createReducer(
     return {
       ...state,
       errorMessage: action.message,
+    };
+  }),
+  on(switchDarkTheme, (state) => {
+    return {
+      ...state,
+      isDarkThemeEnabled: !state.isDarkThemeEnabled
+    }
+  }),
+  on(loadIpInfoSuccess, (state, action) => {
+    return {
+      ...state,
+      ipInfo: action.ipInfoResponse
     };
   })
 );
