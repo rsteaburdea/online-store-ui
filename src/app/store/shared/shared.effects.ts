@@ -17,7 +17,7 @@ export class SharedEffects {
         private ipService: IpService,
         private store: Store<AppState>,
         private translateService: TranslateService
-    ) {}
+    ) { }
 
     loadIp$ = createEffect(() => {
         return this.actions$.pipe(
@@ -44,18 +44,18 @@ export class SharedEffects {
             ofType(loadIpSuccess),
             map((action) => {
                 let language: string = 'en';
-                if (action !== null && action.ipInfoResponse !== null) 
+                if (action !== null && action.ipInfoResponse !== null)
                     language = action.ipInfoResponse.location.language.code;
                 return updateCurrentLanguage({ language });
             })
         )
     })
 
-    updateCurrentLanguage$ = createEffect(
-        () => {
-            return this.actions$.pipe(
+    updateTranslateServiceLanguage$ = createEffect(
+        () =>
+            this.actions$.pipe(
                 ofType(updateCurrentLanguage),
-                switchMap((action) => 
+                switchMap((action) =>
                     this.store.select(getAvailableLanguages)
                         .pipe(
                             map(array => {
@@ -64,19 +64,16 @@ export class SharedEffects {
                             })
                         )
                 ),
-                switchMap((language) => 
+                switchMap((language) =>
                     this.store.select(getDefaultLanguage)
                         .pipe(
                             map(defaultLanguage => {
-                                return (language !== null) ? language : defaultLanguage;
+                                language = (language !== null) ? language : defaultLanguage
+                                this.translateService.setDefaultLang(language);
+                                this.translateService.use(language);
+                                return language;
                             })
                         )
-                ),
-                switchMap((language) => {
-                    this.translateService.setDefaultLang(language);
-                    return this.translateService.use(language);
-                })
-            )
-        }
-    )
+                )
+            ), { dispatch: false })
 }
