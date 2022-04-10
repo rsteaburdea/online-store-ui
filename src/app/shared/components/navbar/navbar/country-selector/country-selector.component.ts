@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { IpInfoResponse } from 'src/app/models/ip.info.response.data';
 import { AppState } from 'src/app/store/app.state';
-import { getIpInfo } from 'src/app/store/shared/shared.selector';
+import { getAvailableLanguages, getIpInfo } from 'src/app/store/shared/shared.selector';
 
 @Component({
   selector: 'app-country-selector',
@@ -12,6 +12,7 @@ import { getIpInfo } from 'src/app/store/shared/shared.selector';
   styleUrls: ['./country-selector.component.scss'],
 })
 export class CountrySelectorComponent implements OnInit, OnDestroy {
+  public readonly availableLanguages$: Observable<(string)[]> = this.store.select(getAvailableLanguages);
   private readonly destroy$ = new Subject();
 
 
@@ -32,6 +33,11 @@ export class CountrySelectorComponent implements OnInit, OnDestroy {
           this.translateService.use(language);
         }
       });
+  }
+
+  public changeLanguage(language: string): void {
+    this.translateService.setDefaultLang(language);
+    this.translateService.use(language);
   }
 
   ngOnDestroy(): void {
