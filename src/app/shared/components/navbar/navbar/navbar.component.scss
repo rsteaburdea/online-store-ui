@@ -35,18 +35,10 @@ mat-toolbar {
         }
       }
     }
-
-    .nav-left,
-    .nav-right {
-      // FIXME: Padding and overlay
-      .translate {
-        border-right: 1px solid white;
-        padding-right: 32px;
-      }
-    }
   }
 }
 
+// TODO: COMMENT THIS
 :host {
   height: 100vh;
   display: block;

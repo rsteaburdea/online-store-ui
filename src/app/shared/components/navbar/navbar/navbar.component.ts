@@ -5,6 +5,8 @@ import { map, Observable, startWith } from 'rxjs';
 import { autoLogout } from 'src/app/auth/state/auth.actions';
 import { isAuthenticated } from 'src/app/auth/state/auth.selector';
 import { AppState } from 'src/app/store/app.state';
+import { switchDarkTheme } from 'src/app/store/shared/shared.actions';
+import { isDarkThemeEnabled } from 'src/app/store/shared/shared.selector';
 
 @Component({
   selector: 'app-navbar',
@@ -13,10 +15,8 @@ import { AppState } from 'src/app/store/app.state';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavbarComponent implements OnInit{
-  @Input()
-  isDarkMode = false;
+  public isDarkMode!: Observable<boolean>;
   @Output()
-  readonly darkThemeEmitter = new EventEmitter<boolean>();
   private isAuthenticated!: Observable<boolean>;
 
   public searchBarForm = new FormGroup({
@@ -30,13 +30,14 @@ export class NavbarComponent implements OnInit{
   constructor(private store: Store<AppState>) {}
 
   toggleDarkTheme(): void {
-    this.darkThemeEmitter.emit(!this.isDarkMode);
+    this.store.dispatch(switchDarkTheme());
   }
 
   onSubmit() {}
 
 
   ngOnInit() {
+    this.isDarkMode = this.store.select(isDarkThemeEnabled);
     this.isAuthenticated = this.store.select(isAuthenticated);
     if (this.searchBarForm !== null && this.searchBarForm.get('searchBar') !== null) {
       //@ts-ignore

@@ -39,14 +39,12 @@
           <div class="nav-right">
             <button mat-icon-button (click)="toggleDarkTheme()">
               <span style="display: flex; justify-content: center;">
-                <mat-icon *ngIf="!isDarkMode">light_mode</mat-icon>
-                <mat-icon *ngIf="isDarkMode">dark_mode</mat-icon>
+                <mat-icon *ngIf="!(isDarkMode | async)">light_mode</mat-icon>
+                <mat-icon *ngIf="(isDarkMode | async)">dark_mode</mat-icon>
               </span>
             </button>
-            <button mat-icon-button>
-              <mat-icon class="translate">translate</mat-icon>
-            </button>
-            <button mat-icon-button routerLink="/sign-in">
+            <app-country-selector></app-country-selector>
+            <button mat-icon-button routerLink="/auth">
               <mat-icon>person</mat-icon>
             </button>
             <button mat-icon-button>
