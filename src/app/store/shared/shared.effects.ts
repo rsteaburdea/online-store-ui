@@ -7,7 +7,7 @@ import { catchError, exhaustMap, map } from "rxjs/operators";
 import { IpConfig } from "src/app/models/config.model";
 import { IpService } from "src/app/services/ip.service";
 import { AppState } from "../app.state";
-import { loadIpConfig, loadIpSuccess, setErrorMessage, setLoadingSpinner, updateCurrentLanguage } from "./shared.actions";
+import { loadIpConfig, loadIpSuccess, loadLanguageConfig, setErrorMessage, setLoadingSpinner, updateCurrentLanguage } from "./shared.actions";
 import { getAvailableLanguages, getDefaultLanguage } from "./shared.selector";
 
 @Injectable()
@@ -32,7 +32,7 @@ export class SharedEffects {
                     }),
                     catchError(() => {
                         this.store.dispatch(setLoadingSpinner({ status: false }));
-                        return of(setErrorMessage({ message: 'Unknown error occurred. Please try again' }));
+                        return of(setErrorMessage({ message: 'Could not get ip details' }));
                     })
                 )
             })
@@ -44,6 +44,24 @@ export class SharedEffects {
             ofType(loadIpSuccess),
             map((action) => {
                 return action.ipInfoResponse?.location.language.code;
+            }),
+            switchMap((language) => 
+                this.store.select(getDefaultLanguage)
+                    .pipe(
+                        map((defaultLanguage) => {
+                            language ??= defaultLanguage;
+                            return updateCurrentLanguage({ language });
+                        })
+                    )
+            )
+        )
+    })
+
+    loadLanguageConfig$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(loadLanguageConfig),
+            map((action) => {
+                return action.languageConfig.defaultLanguage;
             }),
             switchMap((language) => 
                 this.store.select(getDefaultLanguage)

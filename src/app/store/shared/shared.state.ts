@@ -16,8 +16,8 @@ export const initialState: SharedState = {
   isDarkThemeEnabled: false,
   ipInfo: null,
   languageConfig: {
-    defaultLanguage: 'en',
+    defaultLanguage: 'ro',
     availableLanguages: ['en', 'ro']
   },
-  currentLanguage: 'en'
+  currentLanguage: 'ro'
 };
