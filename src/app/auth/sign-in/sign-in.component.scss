@@ -1,42 +1,55 @@
 div {
     height: 100vh;
-    display: block;
     display: flex;
     justify-content: center;
     align-items: center;
-    mat-card {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 15%;
-        width: 350px;
-        height: 350px;
-        padding: 16px 24px;
+    flex-direction: column;
 
-        mat-card-title {
-            margin-top: 10px;
-        }
-
-        mat-card-content {
-            margin-top: auto;
-            margin-bottom: auto;
-        }
-
-        mat-card-footer {
-            margin-bottom: 10px;
-        }
-
+    header {
+        margin-bottom: 5%;
+            a {
+                text-decoration: none;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: inherit; // to get the color from mat-card-title
+                span {
+                    font-size: 50px;
+                    color: inherit; // to get the color from mat-card-title
+                }
+            }
     }
+
+    section {
+        mat-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 50%;
+            width: 350px;
+            height: 350px;
+            padding: 16px 24px;
     
-    .company-name {
-        display: block;
-        margin-bottom: auto;
-    }
+            mat-card-title {
+                margin-top: 10px;
+            }
     
-    button: {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+            mat-card-content {
+                margin-top: auto;
+                margin-bottom: auto;
+            }
+    
+            mat-card-footer {
+                margin-bottom: 10px;
+            }
+    
+        }
+        
+        button: {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     }
 }

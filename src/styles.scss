@@ -2,8 +2,15 @@
 @use "@angular/material" as mat;
 @use '../src/styles/themes/light' as light;
 @use '../src/styles/themes/dark' as dark;
+@use 'sass:map';
 
 @include mat.core();
+
+$color-config:    mat.get-color-config(light.$light-theme);
+$primary-palette: map.get($color-config, 'primary');
+$accent-palette:  map.get($color-config, 'accent');
+$warn-palette:    map.get($color-config, 'warn');
+$is-dark-theme:   map.get($color-config, 'is-dark');
 
 .light-theme {
   @include mat.all-component-themes(light.$light-theme);

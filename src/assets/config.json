@@ -1,6 +1,6 @@
 {
   "languageConfig": {
-    "defaultLanguage": "ro",
+    "defaultLanguage": "en",
     "availableLanguages": ["en", "ro"]
   },
   "ipConfig": {
