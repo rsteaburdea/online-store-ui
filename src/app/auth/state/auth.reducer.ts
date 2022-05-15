@@ -1,4 +1,4 @@
-import { loginSuccess, signupSuccess, autoLogout } from './auth.actions';
+import { loginSuccess, signupSuccess, autoLogout, googleLoginSuccess } from './auth.actions';
 import { Action, createReducer, on } from '@ngrx/store';
 import { AuthState, initialState } from './auth.state';
 
@@ -21,6 +21,12 @@ const _authReducer = createReducer(
       ...state,
       user: null,
     };
+  }),
+  on(googleLoginSuccess, (state, action) => {
+    return {
+      ...state,
+      user: action.user
+    }
   })
 );
 

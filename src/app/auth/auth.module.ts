@@ -10,6 +10,25 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { initialState } from '../store/shared/shared.state';
 import { HttpLoaderFactory } from '../app.module';
 import { HttpClient } from '@angular/common/http';
+import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+
+const socialAuthServiceConfig: SocialAuthServiceConfig = {
+  autoLogin: false,
+  providers: [
+    {
+      id: GoogleLoginProvider.PROVIDER_ID,
+      provider: new GoogleLoginProvider('clientId')
+    },
+    {
+      id: FacebookLoginProvider.PROVIDER_ID,
+      provider: new FacebookLoginProvider('clientId')
+    }
+  ],
+  onError: (err) => {
+    console.error(err);
+  }
+}
 
 @NgModule({
   declarations: [SignInComponent],
@@ -19,6 +38,7 @@ import { HttpClient } from '@angular/common/http';
     ReactiveFormsModule,
     MaterialModule,
     FontAwesomeModule,
+    SocialLoginModule,
     EffectsModule.forFeature(),
     TranslateModule.forChild({
       defaultLanguage: initialState.languageConfig.defaultLanguage,
@@ -29,5 +49,11 @@ import { HttpClient } from '@angular/common/http';
       }
     })
   ],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: socialAuthServiceConfig
+    }
+  ]
 })
-export class AuthModule {}
+export class AuthModule { }

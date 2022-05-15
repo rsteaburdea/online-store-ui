@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { faFacebook, faFacebookF, faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { faFacebookF, faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.state';
 
 @Component({
   selector: 'app-sign-in',
@@ -9,10 +11,12 @@ import { faFacebook, faFacebookF, faGoogle } from '@fortawesome/free-brands-svg-
 export class SignInComponent implements OnInit {
   faGoogle = faGoogle;
   faFacebook = faFacebookF;
-  constructor() { 
-  }
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
   }
 
+  public googleSignIn(): void {
+    
+  }
 }

@@ -9,5 +9,5 @@ export const isAuthenticated = createSelector(getAuthState, (state) => {
 });
 
 export const getToken = createSelector(getAuthState, (state) => {
-  return state.user ? state.user.userToken : null;
+  return state.user ? state.user.getUserToken : null;
 });
